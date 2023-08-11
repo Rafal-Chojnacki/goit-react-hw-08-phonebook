@@ -7,7 +7,6 @@ import UserMenu from 'components/UserManu';
 const ContactsPage = () => {
   // Get the history object for redirection
 
-  const [contacts, setContacts] = useState([]);
   const [token, setToken] = useState('');
 
   useEffect(() => {
@@ -28,15 +27,14 @@ const ContactsPage = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          setContacts(data.contacts);
+          // Process the data as needed, you can loop through or use it directly
+          console.log('Fetched contacts:', data.contacts);
         })
         .catch((error) => {
           console.error('Error fetching contacts:', error);
         });
     }
-  }, [token]);
-
-  
+  }, [token]); // Only 'token' is a dependency
 
   return (
     <Provider store={store}>
