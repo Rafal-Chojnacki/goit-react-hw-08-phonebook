@@ -5,9 +5,9 @@ import css from './contactList.module.css';
 const ContactList = ({ deleteContact }) => {
   const [filter, setFilter] = useState('');
 
-  const contacts = useSelector((state) => state.contacts);
+  const contacts = useSelector(state => state.contacts);
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { value } = e.target;
     setFilter(value);
   };
@@ -17,7 +17,7 @@ const ContactList = ({ deleteContact }) => {
       return contacts;
     }
     return contacts.filter(
-      (contact) => contact.name.toLowerCase().indexOf(filter) >= 0
+      contact => contact.name.toLowerCase().indexOf(filter) >= 0
     );
   };
 
@@ -58,9 +58,7 @@ const ContactList = ({ deleteContact }) => {
               <button
                 className={css.deleteBtn}
                 onClick={() => deleteContact(id)}
-              >
-                Delete contact
-              </button>
+              > Delete contact </button>
             </div>
           </li>
         ))}

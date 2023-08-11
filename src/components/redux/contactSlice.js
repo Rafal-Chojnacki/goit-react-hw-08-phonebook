@@ -1,14 +1,18 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { nanoid } from 'nanoid';
 import axios from 'axios';
+import Notiflix from 'notiflix';
 
-const API_URL = 'https://64c925c9b2980cec85c1fa34.mockapi.io/contacts';
+const API_URL = 'https://connections-api.herokuapp.com/contacts';
 
+const getToken = () => {
+  return localStorage.getItem('authToken');
+};
 
-export const fetchContacts = createAsyncThunk('contact/fetchContacts', async () => {
+export const fetchContacts = createAsyncThunk('contact/fetchContacts', async (_, thunkAPI) => {
   try {
-    const response = await axios.get(API_URL);
+    const token = getToken();
+    const response = await axios.get(API_URL, { headers: { Authorization: `Bearer ${token}` } });
     return response.data;
   } catch (error) {
     console.error('Error fetching contacts from API:', error);
@@ -18,18 +22,24 @@ export const fetchContacts = createAsyncThunk('contact/fetchContacts', async () 
 
 export const saveContact = createAsyncThunk('contact/saveContact', async (contact) => {
   try {
-    const response = await axios.post(API_URL, contact);
+    const token = getToken();
+    const response = await axios.post(API_URL, contact, { headers: { Authorization: `Bearer ${token}` } });
     return response.data;
   } catch (error) {
     console.error('Error saving contact to API:', error);
-    throw error;
+    throw error; // Rethrow the error
   }
 });
 
-export const deleteContact = createAsyncThunk('contact/deleteContact', async (contactId) => {
+export const deleteContact = createAsyncThunk('contact/deleteContact', async (contactId, thunkAPI) => {
   try {
-    await axios.delete(`${API_URL}/${contactId}`);
-    return contactId;
+    const token = getToken();
+    const response = await axios.delete(`${API_URL}/${contactId}`, { headers: { Authorization: `Bearer ${token}` } });
+    if (response.status === 200) {
+      return contactId;
+    } else {
+      throw new Error(`Failed to delete contact with ID: ${contactId}`);
+    }
   } catch (error) {
     console.error('Error deleting contact from API:', error);
     throw error;
@@ -47,17 +57,19 @@ const contactSlice = createSlice({
         const existedContact = state.some(
           (contact) => contact.name === newContact.name && contact.number === newContact.number
         );
-        if (existedContact) {
-          Notify.warning('This contact already exists');
-        } else {
+        if (!existedContact) {
           state.push({ ...newContact, id: nanoid() });
+          Notiflix.Notify.success('Contact saved successfully');
+        }
+        else {
+          Notiflix.Notify.warning('Contact already exists'); 
         }
       })
       .addCase(deleteContact.fulfilled, (state, action) => {
         const contactId = action.payload;
         return state.filter((contact) => contact.id !== contactId);
       })
-      .addCase(fetchContacts.fulfilled, (state, action) => {
+      .addCase(fetchContacts.fulfilled, (_, action) => {
         return action.payload;
       });
   },
