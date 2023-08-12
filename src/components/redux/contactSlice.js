@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, createAction } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
 import axios from 'axios';
 import Notiflix from 'notiflix';
@@ -46,6 +46,8 @@ export const deleteContact = createAsyncThunk('contact/deleteContact', async (co
   }
 });
 
+export const resetContacts = createAction('contact/resetContacts');
+
 const contactSlice = createSlice({
   name: 'contact',
   initialState: [],
@@ -71,6 +73,9 @@ const contactSlice = createSlice({
       })
       .addCase(fetchContacts.fulfilled, (_, action) => {
         return action.payload;
+      })
+      .addCase(resetContacts, (state) => {
+        return [];
       });
   },
 });

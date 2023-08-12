@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux'; // Import useDispatch
+import { resetContacts } from 'components/redux/contactSlice'
 
 const UserMenu = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [userEmail, setUserEmail] = useState('');
 
   const handleLogout = () => {
@@ -18,6 +21,7 @@ const UserMenu = () => {
       .then((response) => response.json())
       .then((data) => {
         localStorage.removeItem('authToken');
+        dispatch(resetContacts());
         navigate('/login'); 
       })
       .catch((error) => {
