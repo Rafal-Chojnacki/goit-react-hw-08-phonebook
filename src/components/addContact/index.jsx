@@ -9,7 +9,7 @@ import ContactList from 'components/contactList';
 const AddContact = () => {
   const contacts = useSelector((state) => state.contacts);
   const dispatch = useDispatch();
-
+console.log(contacts)
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);

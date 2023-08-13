@@ -47,6 +47,7 @@ export const deleteContact = createAsyncThunk('contact/deleteContact', async (co
 });
 
 export const resetContacts = createAction('contact/resetContacts');
+export const updateContact = createAction('contact/updateContact');
 
 const contactSlice = createSlice({
   name: 'contact',
@@ -76,8 +77,21 @@ const contactSlice = createSlice({
       })
       .addCase(resetContacts, (state) => {
         return [];
+      })
+      .addCase(updateContact, (state, action) => {
+        const updatedContact = action.payload;
+        const contactIndex = state.findIndex((contact) => contact.id === updatedContact.id);
+  
+        if (contactIndex !== -1) {
+          state[contactIndex] = updatedContact;
+          Notiflix.Notify.success('Contact edited successfully');
+        }
       });
   },
 });
+
+
+
+
 
 export default contactSlice.reducer;

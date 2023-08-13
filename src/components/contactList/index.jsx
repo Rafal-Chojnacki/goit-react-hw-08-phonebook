@@ -1,15 +1,68 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import css from './contactList.module.css';
+import { deleteContact } from '../redux/contactSlice';
+import { updateContact } from '../redux/contactSlice';
 
-const ContactList = ({ deleteContact }) => {
+const ContactList = () => {
+  const dispatch = useDispatch();
   const [filter, setFilter] = useState('');
+  const [editing, setEditing] = useState(false);
+  const [editingContactId, setEditingContactId] = useState('');
+  const [editedName, setEditedName] = useState('');
+  const [editedNumber, setEditedNumber] = useState('');
 
   const contacts = useSelector(state => state.contacts);
 
+  const getToken = () => {
+    return localStorage.getItem('authToken');
+  };
   const handleChange = e => {
     const { value } = e.target;
     setFilter(value);
+  };
+
+  const handleEdit = (id, name, number) => {
+    setEditing(true);
+    setEditingContactId(id);
+    setEditedName(name);
+    setEditedNumber(number);
+  };
+
+  const handleSaveEdit = async () => {
+    try {
+      const token = getToken();
+      const contactId = editingContactId;
+      const editedContact = {
+        name: editedName,
+        number: editedNumber,
+      };
+      
+      const response = await fetch(
+        `https://connections-api.herokuapp.com/contacts/${contactId}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(editedContact),
+        }
+      );
+  
+      if (response.ok) {
+        dispatch(updateContact({ ...editedContact, id: editingContactId }));
+        setEditing(false);
+      } else {
+        console.error('Failed to update contact:', response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error('Error editing contact:', error);
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setEditing(false);
   };
 
   const getContacts = () => {
@@ -53,13 +106,40 @@ const ContactList = ({ deleteContact }) => {
       <ul>
         {getContacts().map(({ name, number, id }) => (
           <li key={id} className={css.contact}>
-            {name} --- {number}
-            <div>
-              <button
-                className={css.deleteBtn}
-                onClick={() => deleteContact(id)}
-              > Delete contact </button>
-            </div>
+            {editing && editingContactId === id ? (
+              <>
+                <input
+                  type="text"
+                  value={editedName}
+                  onChange={e => setEditedName(e.target.value)}
+                />
+                <input
+                  type="text"
+                  value={editedNumber}
+                  onChange={e => setEditedNumber(e.target.value)}
+                />
+                <button onClick={handleSaveEdit}>Save</button>
+                <button onClick={handleCancelEdit}>Cancel</button>
+              </>
+            ) : (
+              <>
+                {name} --- {number}
+                <div>
+                  <button
+                    className={css.editBtn}
+                    onClick={() => handleEdit(id, name, number)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className={css.deleteBtn}
+                    onClick={() => dispatch(deleteContact(id))}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </>
+            )}
           </li>
         ))}
       </ul>
