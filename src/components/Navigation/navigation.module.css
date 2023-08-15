@@ -1,0 +1,15 @@
+.navBox {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.navBoxItem {
+    margin-left: 20px;
+    padding: 5px 15px;
+    margin-right: 20px;
+    background-color: blue;
+    border-radius: 10px;
+}

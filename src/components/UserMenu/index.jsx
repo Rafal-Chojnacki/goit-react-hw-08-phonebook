@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux'; // Import useDispatch
 import { resetContacts } from 'components/redux/contactSlice'
+import css from './userMenu.module.css'
 
 const UserMenu = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [userEmail, setUserEmail] = useState('');
+
+  
 
   const handleLogout = () => {
     const storedToken = localStorage.getItem('authToken');
@@ -48,9 +51,9 @@ const UserMenu = () => {
   }, []);
 
   return (
-    <div>
-      <p>{userEmail}</p>
-      <button type="button" onClick={handleLogout}>
+    <div className={css.userMenu}>
+      <p className={css.userEmail} >{userEmail}</p>
+      <button className={css.menuBtn} type="button" onClick={handleLogout}>
         Log out
       </button>
     </div>

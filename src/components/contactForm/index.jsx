@@ -36,7 +36,7 @@ const ContactForm = ({ addContact }) => {
               required
               placeholder="Name"
               value={name}
-              className={css.formInput}
+              className={css.input}
               onChange={handleChange}
             />
           </label>
@@ -52,7 +52,7 @@ const ContactForm = ({ addContact }) => {
               required
               placeholder="Phone number"
               value={number}
-              className={css.formInput}
+              className={css.input}
               onChange={handleChange}
             />
           </label>

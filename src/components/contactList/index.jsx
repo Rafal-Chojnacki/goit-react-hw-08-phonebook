@@ -37,7 +37,7 @@ const ContactList = () => {
         name: editedName,
         number: editedNumber,
       };
-      
+
       const response = await fetch(
         `https://connections-api.herokuapp.com/contacts/${contactId}`,
         {
@@ -49,12 +49,16 @@ const ContactList = () => {
           body: JSON.stringify(editedContact),
         }
       );
-  
+
       if (response.ok) {
         dispatch(updateContact({ ...editedContact, id: editingContactId }));
         setEditing(false);
       } else {
-        console.error('Failed to update contact:', response.status, response.statusText);
+        console.error(
+          'Failed to update contact:',
+          response.status,
+          response.statusText
+        );
       }
     } catch (error) {
       console.error('Error editing contact:', error);
@@ -81,7 +85,7 @@ const ContactList = () => {
   return (
     <div>
       <div>
-        <h2>Contacts</h2>
+        <h2 className={css.contactsH2}>Contacts</h2>
         <form className={css.form}>
           <div className={css.formInput}>
             <label htmlFor="Find contacts by name" className={css.inputLabel}>
@@ -92,17 +96,16 @@ const ContactList = () => {
                 placeholder="finding name"
                 value={filter}
                 onChange={handleChange}
-                className={css.formInput}
+                className={css.input}
               ></input>
             </label>
           </div>
+          <button className={css.clearBtn} onClick={clearFindInput}>
+            &#10005;
+          </button>
         </form>
       </div>
-      <div>
-        <button className={css.clearBtn} onClick={clearFindInput}>
-          &#10005;
-        </button>
-      </div>
+
       <ul>
         {getContacts().map(({ name, number, id }) => (
           <li key={id} className={css.contact}>
@@ -118,21 +121,25 @@ const ContactList = () => {
                   value={editedNumber}
                   onChange={e => setEditedNumber(e.target.value)}
                 />
-                <button onClick={handleSaveEdit}>Save</button>
-                <button onClick={handleCancelEdit}>Cancel</button>
+                <button className={css.listBtn} onClick={handleSaveEdit}>
+                  Save
+                </button>
+                <button className={css.listBtn} onClick={handleCancelEdit}>
+                  Cancel
+                </button>
               </>
             ) : (
               <>
                 {name} --- {number}
                 <div>
                   <button
-                    className={css.editBtn}
+                    className={css.listBtn}
                     onClick={() => handleEdit(id, name, number)}
                   >
                     Edit
                   </button>
                   <button
-                    className={css.deleteBtn}
+                    className={css.listBtn}
                     onClick={() => dispatch(deleteContact(id))}
                   >
                     Delete

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Provider } from 'react-redux';
 import store from '../components/redux/store';
 import AddContact from 'components/addContact';
-import UserMenu from 'components/UserManu';
+import UserMenu from 'components/UserMenu';
 
 const ContactsPage = () => {
   // Get the history object for redirection

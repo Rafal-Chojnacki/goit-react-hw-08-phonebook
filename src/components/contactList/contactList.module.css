@@ -1,39 +1,45 @@
-.wrapper {
-    width: 600px;
-    margin: auto;
-    text-align: center;
-}
 
+.contactsH2 {
+    margin-top: 30px;
+    font-size: 30px;
+}
 .form { 
-    display:inline-block;
-    text-align: left;
+    display: flex;
+    justify-content: center;
+    margin: auto 25px;
 }
 
 .formInput {
-    display: flex;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    
+    margin: 20px 0;
+    
   
 }
 .inputLabel {
     color: rgb(0, 60, 255);
     font-weight: 700;
-  
 }
 
+.input {
+    margin-left: 20px;
+    border: 1px solid blue;
+}
 .contact {
     display: flex;
-    text-align: left;
     font-size: 20px;
     padding: 5px;
+    justify-content: center;
+
 }
 
-.deleteBtn {
+.listBtn {
     background-color: bisque;
+    padding: 0px 10px;
     margin-left: 20px;
+    border-radius: 5px;
 }
 
-.deleteBtn:hover {
+.listBtn:hover {
     cursor: pointer;
 }
 
@@ -43,7 +49,8 @@
     border-radius: 5px;
     color: red;
     width: 25px;
-    height: 25px;;
+    height: 25px;
+    margin: 20px;
 }
 
 .clearBtn:hover {

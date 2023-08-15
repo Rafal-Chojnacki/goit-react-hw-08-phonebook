@@ -18,7 +18,11 @@
 .inputLabel {
     color: blue;
     font-weight: 700;
-  
+}
+
+.input {
+    border: 1px solid black;
+    margin-left: 20px;
 }
 .contactFormBtn {
     width: 600px;

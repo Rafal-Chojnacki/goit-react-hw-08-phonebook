@@ -1,0 +1,28 @@
+.userMenu {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    justify-content: center;
+}
+
+.userEmail {
+    margin: auto;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 20px;
+}
+
+.menuBtn {
+    background-color: bisque;
+    padding: 0px 10px;
+    border-radius: 5px;
+    width: 200px;
+    margin: auto;
+    font-weight: 700;
+
+}
+
+.menuBtn:hover {
+    cursor: pointer;
+}

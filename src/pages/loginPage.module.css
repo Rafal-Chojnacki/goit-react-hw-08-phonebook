@@ -1,0 +1,31 @@
+
+.LoginPageH2 {
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
+    font-weight: 700;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.loginPageForm {
+    display: flex;
+    justify-content: center;
+}
+
+.inputLabelLogin {
+    color: rgb(0, 60, 255);
+    font-weight: 700;
+    margin-left: 20px;
+}
+
+.inputLogin {
+    margin-left: 20px;
+    border: 1px solid blue;
+}
+
+.loginBtn {
+    background-color: bisque;
+    padding: 0px 10px;
+    margin-left: 20px;
+    border-radius: 5px;
+}

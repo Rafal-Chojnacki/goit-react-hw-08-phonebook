@@ -53,6 +53,7 @@ const contactSlice = createSlice({
   name: 'contact',
   initialState: [],
   reducers: {},
+  
   extraReducers: (builder) => {
     builder
       .addCase(saveContact.fulfilled, (state, action) => {

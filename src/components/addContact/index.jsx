@@ -1,24 +1,27 @@
 import { useEffect } from 'react';
 import css from './addContact.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { saveContact, deleteContact, fetchContacts } from '../redux/contactSlice';
+import {
+  saveContact,
+  deleteContact,
+  fetchContacts,
+} from '../redux/contactSlice';
 
 import ContactForm from 'components/contactForm';
 import ContactList from 'components/contactList';
 
 const AddContact = () => {
-  const contacts = useSelector((state) => state.contacts);
+  const contacts = useSelector(state => state.contacts);
   const dispatch = useDispatch();
-console.log(contacts)
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
 
-  const handleAddContact = (newContact) => {
+  const handleAddContact = newContact => {
     dispatch(saveContact(newContact));
   };
 
-  const handleDeleteContact = (id) => {
+  const handleDeleteContact = id => {
     dispatch(deleteContact(id));
   };
 

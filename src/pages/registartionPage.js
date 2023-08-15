@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import css from './registrationPage.module.css';
 
 export const RegistrationPage = () => {
   const navigate = useNavigate();
@@ -43,30 +44,46 @@ export const RegistrationPage = () => {
 
   return (
     <div>
-      <h2>Register Page</h2>
-      <form>
+      <h2 className={css.registerPageH2}>Register Page</h2>
+      <form className={css.registerPageForm}>
+        <label htmlFor="User name" className={css.inputLabelRegister}>
+          User name
         <input
           type="text"
           name="name"
           placeholder="Name"
           value={formData.name}
           onChange={handleInputChange} // Use the handleInputChange function
+          className= {css.inputRegister}
         />
+        </label>
+        <label htmlFor="User email" className={css.inputLabelRegister}>
+          User e-mail
         <input
           type="email"
           name="email"
           placeholder="Email"
           value={formData.email}
           onChange={handleInputChange}
+          className = {css.inputRegister}
         />
-        <input
+        </label>
+       <label htmlFor="User password" className={css.inputLabelRegister}>
+          User password
+       <input
           type="password"
           name="password"
           placeholder="Password"
           value={formData.password}
           onChange={handleInputChange}
+          className= {css.inputRegister}
         />
-        <button type="button" onClick={handleRegistration}>
+       </label>
+       
+        <button 
+        type="button" 
+        onClick={handleRegistration}
+        className={css.registerBtn}>
           Register
         </button>
       </form>
