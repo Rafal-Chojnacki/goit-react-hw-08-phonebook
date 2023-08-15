@@ -2,6 +2,7 @@
 .contactsH2 {
     margin-top: 30px;
     font-size: 30px;
+    font-weight: 700;
 }
 .form { 
     display: flex;
